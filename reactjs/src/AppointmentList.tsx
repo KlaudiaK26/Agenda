@@ -44,8 +44,18 @@ const AppointmentList = () => {
   }, []);
 
   // Function to format date and time
-  const formatDateTime = (dateTime: Date) => {
-    return dateTime.toString().slice(0, -8).replace("T", " h");
+  const formatDateTime = (dateTime: Date | string) => {
+    const formattedDateTime = new Date(dateTime).toLocaleString("en-US", {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+
+    return formattedDateTime;
   };
 
   // Function to handle view appointment details
