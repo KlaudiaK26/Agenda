@@ -97,47 +97,56 @@ const AppointmentList = () => {
         </Link>
       </div>
       <div className="list-form">
-        {appointments.map((appointment) => (
-          <div key={appointment.id} className="list">
-            <div className="list-header">
-              <h2 className="list-title">{appointment.title}</h2>
-              <p className="list-details">Host: {appointment.host.name}</p>
-              <p className="list-details">Client: {appointment.client.name}</p>
-              <p className="list-details">
-                Client Company: {appointment.client.companyName}
-              </p>
-              <p className="list-details">Type: {appointment.type}</p>
-              {appointment.type === "physical" && (
-                <p className="list-details">Location: {appointment.location}</p>
-              )}
-              <p className="list-dates">
-                {formatDateTime(appointment.startTime)} -{" "}
-                {formatDateTime(appointment.endTime)}
-              </p>
+        {appointments
+          .sort(
+            (a, b) =>
+              new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+          )
+          .map((appointment) => (
+            <div key={appointment.id} className="list">
+              <div className="list-header">
+                <h2 className="list-title">{appointment.title}</h2>
+                <p className="list-details">Host: {appointment.host.name}</p>
+                <p className="list-details">
+                  Client: {appointment.client.name}
+                </p>
+                <p className="list-details">
+                  Client Company: {appointment.client.companyName}
+                </p>
+                <p className="list-details">Type: {appointment.type}</p>
+                {appointment.type === "physical" && (
+                  <p className="list-details">
+                    Location: {appointment.location}
+                  </p>
+                )}
+                <p className="list-dates">
+                  {formatDateTime(appointment.startTime)} -{" "}
+                  {formatDateTime(appointment.endTime)}
+                </p>
+              </div>
+              {/* ... other details ... */}
+              <div className="buttons">
+                <button
+                  className="button detail"
+                  onClick={() => handleView(appointment.id)}
+                >
+                  View Details
+                </button>
+                <button
+                  className="button edit"
+                  onClick={() => handleEdit(appointment.id, true)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="button delete"
+                  onClick={() => handleDelete(appointment.id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-            {/* ... other details ... */}
-            <div className="buttons">
-              <button
-                className="button detail"
-                onClick={() => handleView(appointment.id)}
-              >
-                View Details
-              </button>
-              <button
-                className="button edit"
-                onClick={() => handleEdit(appointment.id, true)}
-              >
-                Edit
-              </button>
-              <button
-                className="button delete"
-                onClick={() => handleDelete(appointment.id)}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
