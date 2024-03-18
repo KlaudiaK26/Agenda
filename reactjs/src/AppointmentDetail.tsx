@@ -93,7 +93,7 @@ const AppointmentDetail: React.FC<AppointmentDetailProps> = ({
         });
       })
       .catch((error) =>
-        console.error("Error fetching appointment details: ", error)
+        console.error("Error fetching appointment details:", error)
       );
   }, [id]);
 
